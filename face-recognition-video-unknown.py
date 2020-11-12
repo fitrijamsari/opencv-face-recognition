@@ -7,7 +7,7 @@ path = "imageAttendance"
 images = []
 classNames = []
 myList = os.listdir(path)
-print(myList)
+# print(myList)
 
 # use filename and append on images [] and classNames []
 for cls in myList:
@@ -15,7 +15,7 @@ for cls in myList:
     images.append(currentImg)
     # append only name of file eg bill_gates not bill_gates.jpg
     classNames.append(os.path.splitext(cls)[0])
-print(classNames)
+# print(classNames)
 
 # create function for list of encoded images
 def findEncodings(images):
@@ -60,7 +60,7 @@ while True:
         # display bounding box and write name
         if matches[matchIndex]:
             name = classNames[matchIndex].upper()
-            print(name)
+            # print(name)
             y1, x2, y2, x1 = faceLoc
             # multiple by 4 back since we resize the original image to 1/4 previously
             y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
@@ -73,7 +73,7 @@ while True:
             )
             cv2.rectangle(
                 img,
-                (x1, y2 - 35),
+                (x1, y2 - 20),
                 (x2, y2),
                 (0, 255, 0),
                 cv2.FILLED,
@@ -81,9 +81,9 @@ while True:
             cv2.putText(
                 img,
                 name,
-                (x1 + 6, y2 - 6),
+                (x1 + 4, y2 - 4),
                 cv2.FONT_HERSHEY_COMPLEX,
-                0.8,
+                0.5,
                 (255, 255, 255),
                 1,
             )
@@ -100,7 +100,7 @@ while True:
             )
             cv2.rectangle(
                 img,
-                (x1, y2 - 35),
+                (x1, y2 - 20),
                 (x2, y2),
                 (255, 0, 0),
                 cv2.FILLED,
@@ -110,13 +110,18 @@ while True:
                 "unknown",
                 (x1 + 6, y2 - 6),
                 cv2.FONT_HERSHEY_COMPLEX,
-                0.8,
+                0.5,
                 (255, 255, 255),
                 1,
             )
 
     cv2.imshow("Webcam", img)
-    cv2.waitKey(1)
+    # cv2.waitKey(1)
+    if cv2.waitKey(1) & 0xFF == ord("q"):
+        break
+
+cap.release()
+cv2.destroyAllWindows()
 
 
 # improvement: add create encoder based on multiple same person images for better result
